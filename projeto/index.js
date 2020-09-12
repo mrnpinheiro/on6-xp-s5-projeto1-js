@@ -8,7 +8,7 @@ const read = require('readline-sync')
 // Listar no console uma tabela contendo os produtos em ordem crescente 
 // de preço (do menor ao maior). Utilize a lista contida no arquivo database.js
 const{produtos} = db
-produtos.sort((a,b) => a.preco - b.preco)
+produtos.sort((a,b) => b.preco - a.preco)
 console.table(produtos)
 
 // Criação de uma classe chamada Pedido contendo no constructor pelo menos as seguintes informações:
@@ -25,7 +25,7 @@ console.table(produtos)
 const carrinho = []
 
 class Pedido{
-    constructor(carrinho) {
+    constructor(carrinho){
       this.produtos = carrinho
       this.desconto = 0
       this.data = new Date()
@@ -37,14 +37,14 @@ class Pedido{
     calcularTotalItens(){
         this.qtdProdutos = this.produtos.reduce((acumulador, item) => acumulador + item.quantidade, 0)
     }
-    calcularSubtotal() {
+    calcularSubtotal(){
         this.subtotal = this.produtos.reduce((acumulador, item) => acumulador + (item.preco * item.quantidade), 0)
     }
-    calcularDesconto() {
+    calcularDesconto(){
     // Validação de cupom de desconto. Não aceitar cupom acima de 15% de desconto.
         this.desconto = (cupom > 0 && cupom <= 15) ? this.subtotal * (cupom / 100).toFixed(2) : 0
     }
-    calcularTotal() {
+    calcularTotal(){
         this.total = this.subtotal - this.desconto
     }
 }
@@ -64,7 +64,7 @@ do{
     // Validação de produto existente pelo id. Caso não encontre o produto, 
     // apresentar uma mensagem de erro e solicitar novamente um id válido.
     if(produtoEncontrado === undefined){
-      console.log('Tente novamente, esse produto não existe em nossa base!')
+        console.log('Tente novamente, esse produto não existe em nossa base!')
     } else{
     // Validação de quantidade para não permitir valores negativos.
       if(quantidade <= 0){
